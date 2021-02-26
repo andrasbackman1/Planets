@@ -20,9 +20,9 @@ class simulator(object):
 
     Instance Methods:
         Constructor
-        CheckKineticEnergy
     
-    Class Methods:
+    Static Methods:
+        CheckKineticEnergy
         UpdatePositions
         Iterator
         GenerateAcceleration
@@ -49,7 +49,7 @@ class simulator(object):
         
         E_kTotal = 0
         for object in planets:
-            E_k += Calc_Ek(object.velocity, object.mass)
+            E_kTotal += Calc_Ek(object.velocity, object.mass)
         
         return E_kTotal
 
@@ -64,9 +64,10 @@ class simulator(object):
         returns:
             positions (as an iterable)
         """
-        #if randint(0, 10) == 1: # Prints the total kinetic energy every ~10 iterations
-            #print(simulator.CheckKineticEnergy(planets))
-
+        
+        if randint(0, 10) == 1: # Prints the total kinetic energy every ~10 iterations
+            print(simulator.CheckKineticEnergy(planets))
+        
         planets = simulator.Iterator(planets, timestep) #is an np array
         return planets
         
@@ -99,7 +100,7 @@ class simulator(object):
             planet.UpdateVelocity(new_velocity)
             
             new_position = simulator.GenerateNewPositions(planet, timestep)
-            planet.UpdatePosition(new_position)
+            planet.UpdatePosition(new_position, timestep)
         return planets
         
 
@@ -130,6 +131,7 @@ class simulator(object):
         returns:
             v(t+dt) (as a vector)
         """
+        
         new_velocity = planet.velocity + planet.acceleration*timestep
         return new_velocity
 
