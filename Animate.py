@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from Simulation import simulator
 from PlanetObj import Planet
+import numpy as np
 """
 Data is updated continously with the animation
 
@@ -26,7 +27,7 @@ class animator():
                 if row[0] == "Timesteps":
                     self.timesteps = row[1]
                 elif row[0] == "Timestep":
-                    self.timestep = row[1]
+                    self.timestep = np.array([row[1], row[1]], dtype = "float64")
 
         
 
@@ -39,7 +40,7 @@ class animator():
         """
         return self.patches
 
-    def GenerateInitialState(self, _):
+    def GenerateInitialState(self, planets):
         """
         Inputs:
             Planets Initial Positions
@@ -52,9 +53,8 @@ class animator():
         
         return Patches
 
-    def animate(self, planets):
-        print(planets)
-        UpdatedPlanets = simulator.UpdatePositions(planets, self.timesteps)
+    def animate(self, _):
+        UpdatedPlanets = simulator.UpdatePositions(self.planets, self.timestep)
         
         for i in range(len(UpdatedPlanets)):
             planetPosition = UpdatedPlanets[i].position
@@ -77,16 +77,16 @@ class animator():
         """
         fig = plt.figure()
         ax = plt.axes()
-
-        self.patches = self.GenerateInitialState(planets)
+        self.planets = planets
+        self.patches = self.GenerateInitialState(self.planets)
 
         for patch in self.patches:
             ax.add_patch(patch)
         
         #Axes setup
         ax.axis("scaled")
-        ax.set_xlim(-10**7, 10**7)
-        ax.set_ylim(-10**7, 10**7)
+        ax.set_xlim(-3*10**7, 3*10**7) # Don't know how to make the axis adjust itself.
+        ax.set_ylim(-3*10**7, 3*10**7)
 
         anim = FuncAnimation(fig, self.animate, init_func = self.init, frames = self.timesteps,
                              repeat = True, interval = 50, blit = True)
