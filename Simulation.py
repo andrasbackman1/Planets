@@ -3,20 +3,17 @@ from numpy.linalg import norm
 from scipy.constants import G
 from random import randint
 """
-Constructor initiates the space and the iterator (with associated methods).
-    
     #######
     For when I forget, I used a bunch of static methods because it centralizes the data to the objects.
     This class us only suposed to function as a storage fascility for the methods.
-    And I think it will be easier to use them so that I dont need to track who self is all the time.
+    And I think it will be easier to use them so that I can track things easier.
     ########
 
 """
 class simulator(object):
     """
     Attributes:
-        Timestep
-        Planets (as iterable/tuple)
+        None
 
     Instance Methods:
         Constructor
@@ -65,10 +62,11 @@ class simulator(object):
             positions (as an iterable)
         """
         
-        if randint(0, 10) == 1: # Prints the total kinetic energy every ~10 iterations
-            print(simulator.CheckKineticEnergy(planets))
+        if randint(0, 20) == 1: # Prints the total kinetic energy every ~20 iterations
+            E_kT = simulator.CheckKineticEnergy(planets)
+            print(E_kT)
         
-        planets = simulator.Iterator(planets, timestep) #is an np array
+        planets = simulator.Iterator(planets, timestep)
         return planets
         
 
