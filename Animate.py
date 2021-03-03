@@ -2,7 +2,6 @@ import csv
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from Simulation import simulator
-from PlanetObj import Planet
 import numpy as np
 """
 Data is updated continously with the animation
