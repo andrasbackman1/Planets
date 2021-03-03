@@ -12,7 +12,7 @@ def main():
     
     Objects = []
     for object in names:
-        Objects.append(Planet(object)) # Creates list of type planet object with a pointer
+        Objects.append(Planet(object))
     
     Anim = animator()
     Anim.run(Objects)
