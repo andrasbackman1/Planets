@@ -1,10 +1,9 @@
 import csv
 import numpy as np
-from math import atan, pi
 
 """
 Planet instances are objects intended to only store information about itself.
-Methods only exist to change or return attributes.
+Methods only exist to change attributes.
 """
 
 class Planet(object):
@@ -65,13 +64,15 @@ class Planet(object):
     def UpdatePosition(self, newPosition, timestep):
         self.countSteps += 1
         
-        theta = atan(newPosition[1]/newPosition[0])
+        #### Optional extra ####
         if self.name != "Mars" and self.printed is False:
-            if theta >= 0 and theta <= 0.1 and self.countSteps > 5:
-                OrbPeriod = self.countSteps*(timestep[0])*1.15741*10**(-5)*2
-                print("{object}'s orbital period is: {period} days".format(object = self.name, period = round(OrbPeriod,4)))
+            if self.position[1] <= 0 and newPosition[1] >= 0.1 and self.countSteps > 5:
+                # Counts the orbital period. Where the y coordinate transitions from -ve to +ve
+                OrbPeriod = self.countSteps*(timestep[0])*1.15741*10**(-5)
+                print("{object}'s orbital period is: {period} days \nTook {step} steps".format(object = self.name, period = round(OrbPeriod,4), step = self.countSteps))
                 self.printed = True  
-        
+        #### Extra ends ####
+
         self.position = newPosition
         return None
 
